@@ -1,13 +1,13 @@
 version: "3"
 services:
-  confluence:
-    container_name: confluence
-    hostname: confluence
-    image: confluence-4-testing:${CONFLUENCE_VERSION}
+  jira:
+    container_name: jira
+    hostname: jira
+    image: jira-4-testing:${JIRA_VERSION}
     build:
       context: .
       args:
-          CONFLUENCE_VERSION: ${CONFLUENCE_VERSION}
+          JIRA_VERSION: ${JIRA_VERSION}
           JAVA_VERSION: ${JAVA_VERSION}
     environment:
       - TZ
@@ -15,14 +15,14 @@ services:
       - LANG
       - LANGUAGE
     ports:
-      - "8090:8090"
-      - "8092:8091"
+      - "9080:8080"
+      - "9082:8081"
       - "${DEBUG_PORT}:5005"
     depends_on:
       - ldap
       - postgres
     networks:
-      - confluence-net
+      - jira-net
 
   postgres:
     image: postgres:${POSTGRESQL_VERSION}
@@ -30,11 +30,11 @@ services:
     hostname: postgres
     environment:
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=confluence
+      - POSTGRES_DB=jira
     ports:
       - "5432:5432"
     networks:
-      - confluence-net
+      - jira-net
 
   ldap:
     image: aruizca/confluence-test-ldap
@@ -44,8 +44,8 @@ services:
     ports:
       - "389:389"
     networks:
-      - confluence-net
+      - jira-net
 
 networks:
-  confluence-net:
+  jira-net:
     driver: bridge

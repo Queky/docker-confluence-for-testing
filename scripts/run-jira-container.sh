@@ -8,7 +8,7 @@ function usage
     echo "usage: ${scriptName} x.y.z ENV=VALUE ENV2=VALUE"
     echo "   ";
     echo " Set configuration parameters one after another to personalize the docker container";
-    echo " example ${scriptName} 6.1.0 DEBUG_PORT=5006 will set the Confluence version to 6.1.0 opening the 5006 port for debugging";
+    echo " example ${scriptName} 8.4.3 DEBUG_PORT=5006 will set the Jira version to 8.4.3 opening the 5006 port for debugging";
     echo " If no parameters are set , .env file parameters will be set ";
     echo "   ";
     echo "  -h | --help                   : This message";
@@ -19,7 +19,7 @@ args="${@:2}"
 
 case "$1" in
     [0123456789]* )
-        CONFLUENCE_VERSION=$1
+        JIRA_VERSION=$1
         shift 1;;
     -h | --help )
         usage;
@@ -32,9 +32,9 @@ esac
 # Set current folder to parent
 cd "$(dirname "$0")"/..
 
-if [[ ! -z "${CONFLUENCE_VERSION}" ]]
+if [[ ! -z "${JIRA_VERSION}" ]]
 then
-    export CONFLUENCE_VERSION=${CONFLUENCE_VERSION}
+    export JIRA_VERSION=${JIRA_VERSION}
 fi
 
 for env_variable in ${args}
@@ -43,7 +43,7 @@ do
  echo "set environment variable -> ${env_variable}"
 done
 
-echo "Starting Confluence version $CONFLUENCE_VERSION"
+echo "Starting Jira version $JIRA_VERSION"
 echo "---------------------------------"
 
-docker-compose up confluence
+docker-compose up jira
