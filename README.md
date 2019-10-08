@@ -1,10 +1,10 @@
-# Docker-confluence-for-testing (WIP)
+# Docker-jira-for-testing (WIP)
 
 ---
 
-Script that provides a one-off command to locally run any Atlassian Confluence version using an Oracle JRE on a Docker container.
+Script that provides a one-off command to locally run any Atlassian Jira version using an Oracle JRE on a Docker container.
 
-It's purpose is just for quickly spin up any standalone version of Confluence to perform tests on it.
+It's purpose is just for quickly spin up any standalone version of Jira to perform tests on it.
 
 ⚠️Important! This is not intended to be used in a production system.
 
@@ -17,20 +17,20 @@ Adjusting the available RAM for the Docker engine to at least 4GB is also requir
 ## Usage
 
 ```bash
-./scripts/run-confluence-container.sh [x.y.z]
+./scripts/run-jira-container.sh [x.y.z]
 
 ```
 
-x.y.z is an optional parameter with the Confluence version number you want to run.
+x.y.z is an optional parameter with the Jira version number you want to run.
 
 Otherwise the default version that appears on the .env file will be used.
 
-Confluence instance will be listening on <http://localhost:8090/confluence>
+Jira instance will be listening on <http://localhost:9080/jira>
 
 ## Additional settings
 
 ```bash
-./scripts/run-confluence-container.sh [x.y.z] [ENV=VALUE ENV2=VALUE]
+./scripts/run-jira-container.sh [x.y.z] [ENV=VALUE ENV2=VALUE]
 ```
 
 ## JAVA Jdk-Version
@@ -44,7 +44,7 @@ If no JAVA_VERSION is set, by default, version to be installed is: sjre@1.8 (Ora
 For example , to run a container with confluece 5.4.4 (which need java 7) and the zulu 1.7.95 version (wigch is supportorted by JABBA):
 
 ```bash
-./scripts/run-confluence-container.sh 5.4.4 JAVA_VERSION=zulu@1.7.95
+./scripts/run-jira-container.sh 5.4.4 JAVA_VERSION=zulu@1.7.95
 ```
 
 You can check available vendor/version
@@ -69,11 +69,11 @@ DEBUG_PORT=5006
 
 ## Runtime Environment Setup
 
-Several other services are started up along with the Confluence instance to customize your setup:
+Several other services are started up along with the Jira instance to customize your setup:
 
 ## Database
 
-Instead of using the embedded H2 DB, you can configure your Confluence instance to use a proper DB engine. In fact this is really advisable if you want to run a Confluence version >= 6.x and use collaborative editing.
+Instead of using the embedded H2 DB, you can configure your Jira instance to use a proper DB engine. In fact this is really advisable if you want to run a Jira version >= 6.x and use collaborative editing.
 
 At the moment only PostgreSQL is available but we plan to support other DB engines in the future.
 
@@ -84,17 +84,17 @@ By default a container named "postgres" is up using version 9.6, which seems to 
 #### Details
 
 - Container name and hostname: postgres
-- DB name: confluence
+- DB name: jira
 - DB username: postgres
 - DB password: postgres
-- JDBC connection URL: jdbc:postgresql://postgres:5432/confluence
+- JDBC connection URL: jdbc:postgresql://postgres:5432/jira
 
 #### Changing version
 
 You can change the default PostgreSQL version (9.6) by adding the environment variable `POSTGRESQL_VERSION`. Eg:
 
 ```bash
-./scripts/run-confluence-container.sh 6.15.1 POSTGRESQL_VERSION=10.2
+./scripts/run-jira-container.sh 6.15.1 POSTGRESQL_VERSION=10.2
 ```
 
 You can use any of the versions available in [the official PostgreSQL Docker repository](https://hub.docker.com/_/postgres)
@@ -102,7 +102,7 @@ You can use any of the versions available in [the official PostgreSQL Docker rep
 ⚠️Important! Versions earlier that 9.6 present problems with Collaborative Editing feature.
 
 #### DB recommended version
-| Confluence Version | PostgreSQL version |
+| Jira Version | PostgreSQL version |
 |--------------------|:------------------:|
 | 5.8.x - 5.10.x     |        9.5         |
 | 6.0.x - ...        |        9.6         |
@@ -111,16 +111,16 @@ You can use any of the versions available in [the official PostgreSQL Docker rep
 
 Most companies use an external directory services to manage users authentication and authorization. To test that scenario I have forked and customized a [Docker image with OpenLDAP in this repository](https://github.com/aruizca/docker-test-openldap), so it can be used out of the box for that purpose.
 
-A container using this image will be run along with Confluence and available if needed.
+A container using this image will be run along with Jira and available if needed.
 
-That repo contains also the setting to configure it inside Confluence.
+That repo contains also the setting to configure it inside Jira.
 
 ## Troubleshooting
 
-### After setting up Confluence everything is slow
+### After setting up Jira everything is slow
 
 This might be due to the synchrony server (collaborative editing) failing to start up correctly. You can disable synchrony via REST API using the following GET request:
 
-> <http://localhost:8090/confluence/rest/synchrony-interop/disable?os_username=admin&os_password=admin>
+> <http://localhost:9080/jira/rest/synchrony-interop/disable?os_username=admin&os_password=admin>
 
 Also makes sure that in the Advanced Docker preferences the amount of RAM available for the Docker engine is at least 4GB.
