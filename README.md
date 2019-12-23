@@ -94,7 +94,7 @@ By default a container named "postgres" is up using version 9.6, which seems to 
 You can change the default PostgreSQL version (9.6) by adding the environment variable `POSTGRESQL_VERSION`. Eg:
 
 ```bash
-./scripts/run-jira-service-desk-container.sh 6.15.1 POSTGRESQL_VERSION=10.2
+./scripts/run-jira-service-desk-container.sh 4.6.0 POSTGRESQL_VERSION=9.6
 ```
 
 You can use any of the versions available in [the official PostgreSQL Docker repository](https://hub.docker.com/_/postgres)
