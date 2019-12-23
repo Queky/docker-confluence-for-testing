@@ -84,10 +84,10 @@ By default a container named "postgres" is up using version 9.6, which seems to 
 #### Details
 
 - Container name and hostname: postgres
-- DB name: jira-service-desk
+- DB name: jira
 - DB username: postgres
 - DB password: postgres
-- JDBC connection URL: jdbc:postgresql://postgres:5432/jira-service-desk
+- JDBC connection URL: jdbc:postgresql://postgres:5432/jira
 
 #### Changing version
 
@@ -100,14 +100,6 @@ You can change the default PostgreSQL version (9.6) by adding the environment va
 You can use any of the versions available in [the official PostgreSQL Docker repository](https://hub.docker.com/_/postgres)
 
 ⚠️Important! Versions earlier that 9.6 present problems with Collaborative Editing feature.
-
-## External user directory
-
-Most companies use an external directory services to manage users authentication and authorization. To test that scenario I have forked and customized a [Docker image with OpenLDAP in this repository](https://github.com/aruizca/docker-test-openldap), so it can be used out of the box for that purpose.
-
-A container using this image will be run along with Jira Service Desk and available if needed.
-
-That repo contains also the setting to configure it inside Jira Service Desk.
 
 ## Troubleshooting
 
