@@ -19,7 +19,7 @@ args="${@:2}"
 
 case "$1" in
     [0123456789]* )
-        JIRA_VERSION=$1
+        JIRA_SERVICE_DESK_VERSION=$1
         shift 1;;
     -h | --help )
         usage;
@@ -32,9 +32,9 @@ esac
 # Set current folder to parent
 cd "$(dirname "$0")"/..
 
-if [[ ! -z "${JIRA_VERSION}" ]]
+if [[ ! -z "${JIRA_SERVICE_DESK_VERSION}" ]]
 then
-    export JIRA_VERSION=${JIRA_VERSION}
+    export JIRA_SERVICE_DESK_VERSION=${JIRA_SERVICE_DESK_VERSION}
 fi
 
 for env_variable in ${args}
@@ -43,7 +43,7 @@ do
  echo "set environment variable -> ${env_variable}"
 done
 
-echo "Starting Jira version $JIRA_VERSION"
+echo "Starting Jira version $JIRA_SERVICE_DESK_VERSION"
 echo "---------------------------------"
 
 docker-compose up jira

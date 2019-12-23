@@ -18,5 +18,5 @@ CATALINA_OPTS="${CATALINA_OPTS} -agentlib:jdwp=transport=dt_socket,server=y,susp
 export CATALINA_OPTS
 echo "CATALINA_OPTS=$CATALINA_OPTS"
 
-exec "$JIRA_INSTALL_DIR/bin/start-jira.sh" "$@"
+exec "$JIRA_SERVICE_DESK_INSTALL_DIR/bin/start-jira.sh" "$@"
 

@@ -3,11 +3,11 @@ services:
   jira:
     container_name: jira
     hostname: jira
-    image: jira-4-testing:${JIRA_VERSION}
+    image: jira-4-testing:${JIRA_SERVICE_DESK_VERSION}
     build:
       context: .
       args:
-          JIRA_VERSION: ${JIRA_VERSION}
+          JIRA_SERVICE_DESK_VERSION: ${JIRA_SERVICE_DESK_VERSION}
           JAVA_VERSION: ${JAVA_VERSION}
     environment:
       - TZ
@@ -19,7 +19,6 @@ services:
       - "9082:8081"
       - "${DEBUG_PORT}:5005"
     depends_on:
-      - ldap
       - postgres
     networks:
       - jira-net
@@ -33,16 +32,6 @@ services:
       - POSTGRES_DB=jira
     ports:
       - "5432:5432"
-    networks:
-      - jira-net
-
-  ldap:
-    image: aruizca/confluence-test-ldap
-    container_name: ldap
-    hostname: ldap
-    privileged: true
-    ports:
-      - "389:389"
     networks:
       - jira-net
 
